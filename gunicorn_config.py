@@ -1,15 +1,26 @@
 import os
-import multiprocessing
 
-# Gunicorn configuration file - optimized for Render free tier (512MB)
-bind = f"0.0.0.0:{os.environ.get('PORT', '10000')}"
-workers = 1  # Single worker to save memory
+# Gunicorn configuration file for Render
+port = os.environ.get('PORT', '10000')
+bind = f"0.0.0.0:{port}"
+
+# Memory optimization
+workers = 1
 worker_class = 'sync'
-threads = 2  # Use threads instead of workers
+threads = 2
 timeout = 120
+
+# Logging
 loglevel = 'info'
 accesslog = '-'
 errorlog = '-'
-max_requests = 100  # Recycle workers to prevent memory leaks
+capture_output = True
+
+# Worker management
+max_requests = 100
 max_requests_jitter = 20
-preload_app = False  # Don't preload to save memory during startup
+preload_app = False
+
+# Print for debugging
+print(f"Gunicorn binding to: {bind}")
+print(f"PORT environment variable: {port}")
