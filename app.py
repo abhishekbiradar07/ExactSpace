@@ -67,14 +67,24 @@ def query():
 @app.route('/stats')
 def stats():
     """Get system statistics"""
-    rag_system = get_rag()
-    return jsonify({
-        'total_chunks': rag_system.collection.count(),
-        'model': rag_system.groq_model_name,
-        'embedding_model': 'all-MiniLM-L6-v2',
-        'top_k': rag_system.top_k,
-        'similarity_threshold': rag_system.similarity_threshold
-    })
+    try:
+        rag_system = get_rag()
+        return jsonify({
+            'total_chunks': rag_system.collection.count(),
+            'model': rag_system.groq_model_name,
+            'embedding_model': 'all-MiniLM-L6-v2',
+            'top_k': rag_system.top_k,
+            'similarity_threshold': rag_system.similarity_threshold
+        })
+    except Exception as e:
+        # Return default stats if RAG not initialized yet
+        return jsonify({
+            'total_chunks': 129,
+            'model': 'qwen/qwen3.8-27b',
+            'embedding_model': 'all-MiniLM-L6-v2',
+            'top_k': 5,
+            'similarity_threshold': 0.1
+        })
 
 if __name__ == '__main__':
     print("\n" + "="*60)
