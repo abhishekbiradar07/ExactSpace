@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Environment variables (IMPORTANT - contains API keys)
+.env
+
+# Credentials file (contains actual API key)
+YOUR_CREDENTIALS.txt
+
+# Model cache
+models/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Results
+evaluation_results.csv
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# NOTE: We DO include these for deployment:
+# - vector_store/ (pre-indexed database needed)
+# - docs/*.pdf (source documents needed)

@@ -1,0 +1,109 @@
+RENDER DEPLOYMENT - QUICK START CHECKLIST
+==========================================
+
+STEP 1: PUSH TO GITHUB
+-----------------------
+cd Task2/prototype
+git init
+git add .
+git commit -m "RAG system ready"
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+git push -u origin main
+
+⚠ Make sure .env is NOT pushed (it's in .gitignore)
+
+STEP 2: RENDER SETUP
+--------------------
+1. Go to: https://render.com
+2. Sign up (use GitHub login - easier)
+3. Click "New +" → "Web Service"
+4. Connect your GitHub repo
+5. Click "Connect"
+
+STEP 3: CONFIGURE SERVICE
+-------------------------
+Name: rag-cyclone-separator
+Region: (Choose closest to you)
+Branch: main
+Root Directory: Task2/prototype    ⚠ IMPORTANT!
+Environment: Python 3
+
+Build Command:
+pip install -r requirements_groq.txt
+
+Start Command:
+gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1
+
+Instance Type: Free
+
+STEP 4: ENVIRONMENT VARIABLES
+-----------------------------
+Add these 3 variables:
+
+GROQ_API_KEY
+your_groq_api_key_here
+
+GROQ_MODEL
+qwen/qwen3.8-27b
+
+PYTHON_VERSION
+3.12.0
+
+STEP 5: DEPLOY
+--------------
+1. Click "Create Web Service"
+2. Wait 3-5 minutes (watch logs)
+3. Look for "Your service is live"
+4. Click the URL to test!
+
+EXPECTED RESULT:
+----------------
+✅ Web interface loads
+✅ Can ask questions
+✅ Gets answers with sources
+✅ Confidence scores show
+✅ Response in 1-3 seconds
+
+TROUBLESHOOTING:
+----------------
+Build fails? 
+→ Check Root Directory = Task2/prototype
+
+Can't find modules?
+→ Verify requirements_groq.txt exists
+
+API key error?
+→ Double-check GROQ_API_KEY variable
+
+Timeout?
+→ Normal on free tier occasionally
+
+YOUR CREDENTIALS:
+-----------------
+API Key: [See YOUR_CREDENTIALS.txt file - not pushed to GitHub]
+Model: qwen/qwen3.8-27b
+
+COST:
+-----
+Free tier: $0/month (750 hours)
+Starter: $7/month (always on, faster)
+
+AUTO-DEPLOY:
+------------
+Every git push → automatic redeploy!
+
+YOUR APP WILL BE AT:
+--------------------
+https://[your-chosen-name].onrender.com
+
+IMPORTANT NOTES:
+----------------
+• First request after sleep: 30-60 seconds
+• Subsequent requests: 1-3 seconds
+• App sleeps after 15 min inactivity (free tier)
+• Vector DB already included (129 chunks)
+• No re-indexing needed!
+
+NEED HELP?
+----------
+See RENDER_DEPLOYMENT_GUIDE.md for detailed walkthrough!
