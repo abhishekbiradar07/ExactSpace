@@ -1,1 +1,1 @@
-web: gunicorn app_minimal:app -c gunicorn_config.py
+web: gunicorn app_lite:app -c gunicorn_config.py
